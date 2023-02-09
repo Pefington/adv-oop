@@ -1,6 +1,5 @@
 import { TAX_RATE } from '../data/constants.js';
 
-export type Basket = Product[];
 export type PriceInCents = number;
 export type Quantity = number;
 export type DisplayName = string;
@@ -11,8 +10,9 @@ export interface Product {
   taxRate: TAX_RATE;
   isImported: boolean;
   priceInCents: PriceInCents;
-  quantity: Quantity;
 }
+
+export type Basket = Array<Product & { quantity: Quantity }>;
 
 export interface InvoiceLine {
   quantity: Quantity;
