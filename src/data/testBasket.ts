@@ -37,7 +37,7 @@ export const testBasket: Basket = [
     namePlural: 'boîtes de chocolats importées',
     taxRate: TAX_RATE.FoodOrMedication,
     isImported: true,
-    priceInCents: 1125,
+    preTaxPrice: 1125,
     quantity: 2,
   },
 ];

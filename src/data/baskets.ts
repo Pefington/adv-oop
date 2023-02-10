@@ -7,7 +7,7 @@ export const basket1: Basket = [
     namePlural: 'livres',
     taxRate: TAX_RATE.Book,
     isImported: false,
-    priceInCents: 1249,
+    preTaxPrice: 1249,
     quantity: 2,
   },
   {
@@ -15,7 +15,7 @@ export const basket1: Basket = [
     namePlural: 'CD musicaux',
     taxRate: TAX_RATE.Other,
     isImported: false,
-    priceInCents: 1499,
+    preTaxPrice: 1499,
     quantity: 1,
   },
   {
@@ -23,7 +23,7 @@ export const basket1: Basket = [
     namePlural: 'barres de chocolat',
     taxRate: TAX_RATE.FoodOrMedication,
     isImported: false,
-    priceInCents: 85,
+    preTaxPrice: 85,
     quantity: 3,
   },
 ];
@@ -34,7 +34,7 @@ export const basket2: Basket = [
     namePlural: 'boîtes de chocolats importées',
     taxRate: TAX_RATE.FoodOrMedication,
     isImported: true,
-    priceInCents: 1000,
+    preTaxPrice: 1000,
     quantity: 2,
   },
   {
@@ -42,7 +42,7 @@ export const basket2: Basket = [
     namePlural: 'flacons de parfum importés',
     taxRate: TAX_RATE.Other,
     isImported: true,
-    priceInCents: 4750,
+    preTaxPrice: 4750,
     quantity: 3,
   },
 ];
@@ -53,7 +53,7 @@ export const basket3: Basket = [
     namePlural: 'flacons de parfum importés',
     taxRate: TAX_RATE.Other,
     isImported: true,
-    priceInCents: 2799,
+    preTaxPrice: 2799,
     quantity: 2,
   },
   {
@@ -61,7 +61,7 @@ export const basket3: Basket = [
     namePlural: 'flacons de parfum',
     taxRate: TAX_RATE.Other,
     isImported: false,
-    priceInCents: 1899,
+    preTaxPrice: 1899,
     quantity: 1,
   },
   {
@@ -69,7 +69,7 @@ export const basket3: Basket = [
     namePlural: 'boîtes de pilules contre la migraine',
     taxRate: TAX_RATE.FoodOrMedication,
     isImported: false,
-    priceInCents: 975,
+    preTaxPrice: 975,
     quantity: 3,
   },
   {
@@ -77,7 +77,7 @@ export const basket3: Basket = [
     namePlural: 'boîtes de chocolats importées',
     taxRate: TAX_RATE.FoodOrMedication,
     isImported: true,
-    priceInCents: 1125,
+    preTaxPrice: 1125,
     quantity: 2,
   },
 ];
