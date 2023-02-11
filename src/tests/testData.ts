@@ -1,5 +1,6 @@
 import { TAX_RATE } from '../data/constants.js';
 import { Product } from '../models/Product.js';
+import { Basket } from '../models/Basket.js';
 
 export const generalImport2799 = new Product(
   'flacon de parfum importé',
@@ -33,9 +34,9 @@ export const essentialImport1125 = new Product(
   true
 );
 
-// export const testBasket: IBasket = [
-//   { ...generalImport2799, quantity: 1 },
-//   { ...general1899, quantity: 1 },
-//   { ...essential975, quantity: 1 },
-//   { ...essentialImport1125, quantity: 1 },
-// ];
+export const testBasket = new Basket( [
+  { ...generalImport2799, quantity: 2 },
+  { ...general1899, quantity: 1 },
+  { ...essential975, quantity: 3 },
+  { ...essentialImport1125, quantity: 2 },
+]);
