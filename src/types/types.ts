@@ -1,10 +1,23 @@
-import { Product } from '../models/Product.js';
+import { TAX_RATE } from '../data/constants.js';
 
 export type PriceInCents = number;
 export type Quantity = number;
 export type DisplayName = string;
+export type IBasket = BasketProduct[];
 
-export type Basket = Array<Product & { quantity: Quantity }>;
+export interface IProduct {
+  readonly nameSingular: DisplayName;
+  readonly namePlural: DisplayName;
+  readonly preTaxPrice: PriceInCents;
+  readonly taxRate: TAX_RATE;
+  readonly isImported: boolean;
+  readonly totalTax: PriceInCents;
+  readonly afterTaxPrice: PriceInCents;
+}
+
+export interface BasketProduct extends IProduct {
+  quantity: Quantity;
+}
 
 export interface InvoiceLine {
   quantity: Quantity;

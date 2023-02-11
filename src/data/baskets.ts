@@ -1,7 +1,7 @@
 import { TAX_RATE } from './constants.js';
-import { Basket } from '../types/types.js';
+import { IBasket } from '../types/types.js';
 
-export const basket1: Basket = [
+export const basket1: IBasket = [
   {
     nameSingular: 'livre',
     namePlural: 'livres',
@@ -13,7 +13,7 @@ export const basket1: Basket = [
   {
     nameSingular: 'CD musical',
     namePlural: 'CD musicaux',
-    taxRate: TAX_RATE.Other,
+    taxRate: TAX_RATE.General,
     isImported: false,
     preTaxPrice: 1499,
     quantity: 1,
@@ -28,7 +28,7 @@ export const basket1: Basket = [
   },
 ];
 
-export const basket2: Basket = [
+export const basket2: IBasket = [
   {
     nameSingular: 'boîte de chocolats importée',
     namePlural: 'boîtes de chocolats importées',
@@ -40,18 +40,18 @@ export const basket2: Basket = [
   {
     nameSingular: 'flacon de parfum importé',
     namePlural: 'flacons de parfum importés',
-    taxRate: TAX_RATE.Other,
+    taxRate: TAX_RATE.General,
     isImported: true,
     preTaxPrice: 4750,
     quantity: 3,
   },
 ];
 
-export const basket3: Basket = [
+export const basket3: IBasket = [
   {
     nameSingular: 'flacon de parfum importé',
     namePlural: 'flacons de parfum importés',
-    taxRate: TAX_RATE.Other,
+    taxRate: TAX_RATE.General,
     isImported: true,
     preTaxPrice: 2799,
     quantity: 2,
@@ -59,7 +59,7 @@ export const basket3: Basket = [
   {
     nameSingular: 'flacon de parfum',
     namePlural: 'flacons de parfum',
-    taxRate: TAX_RATE.Other,
+    taxRate: TAX_RATE.General,
     isImported: false,
     preTaxPrice: 1899,
     quantity: 1,

@@ -1,56 +1,30 @@
 import { describe, it, expect } from 'vitest';
-import { Product } from '../models/Product';
-
-const essential975 = new Product(
-  'single essential product',
-  'several essential products',
-  0,
-  'isNotImported',
-  975
-);
-const otherImport2799 = new Product(
-  'singularname',
-  'pluralname',
-  25,
-  'isImported',
-  2799
-);
+import { general1899, generalImport2799, essential975 } from './testData';
 
 describe('Product', () => {
-  it('should return a product with the correct properties', () => {
-    expect(essential975).toStrictEqual({
-      nameSingular: 'single essential product',
-      namePlural: 'several essential products',
-      taxRate: 0,
-      importStatus: 'isNotImported',
-      preTaxPrice: 975,
-    });
-  });
-
-  it('should return a product with the correct properties', () => {
-    expect(otherImport2799).toStrictEqual({
-      nameSingular: 'singularname',
-      namePlural: 'pluralname',
-      taxRate: 25,
-      importStatus: 'isImported',
+  it('should have constructed a product instance with the correct properties', () => {
+    expect(generalImport2799).toEqual({
+      nameSingular: 'flacon de parfum importé',
+      namePlural: 'flacons de parfum importés',
       preTaxPrice: 2799,
+      taxRate: 20,
+      isImported: true,
     });
   });
 
-  it('should calculate the price of an essential product after taxes', () => {
-    expect(essential975.getAfterTaxPrice()).toStrictEqual(975);
+  it('should calculate the after tax price of an essential product', () => {
+    expect(essential975.afterTaxPrice).toStrictEqual(975);
   });
 
-  it('should calculate the price of an imported product after taxes', () => {
-    expect(otherImport2799.getAfterTaxPrice()).toStrictEqual(3499);
-  } );
-
-  it('given a product, should calculate the tax to pay for a local product', () => {
-    expect(calculateTax(other1899)).toStrictEqual(380);
+  it('should calculate the after tax price of an imported product', () => {
+    expect(generalImport2799.afterTaxPrice).toStrictEqual(3499);
   });
 
-  it('should calculate the tax to pay for an imported product', () => {
-    expect(calculateTax(otherImport2799)).toStrictEqual(700);
-  } );
-  
+  it('should calculate the total tax for a local product', () => {
+    expect(general1899.totalTax).toStrictEqual(380);
+  });
+
+  it('should calculate the total tax for an imported product', () => {
+    expect(generalImport2799.totalTax).toStrictEqual(700);
+  });
 });
