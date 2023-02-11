@@ -4,9 +4,9 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "invoice": "ts-node --esm src/main.ts",
-    "test": "vitest",
-    "coverage": "vitest --coverage"
+    "invoice": "clear && ts-node --esm src/main.ts",
+    "test": "clear && vitest",
+    "coverage": "clear && vitest --coverage"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.0.0",
