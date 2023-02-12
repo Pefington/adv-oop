@@ -16,5 +16,5 @@ export const basket3 = new Basket([
   { ...products.flaconParfumImport2799, quantity: 2 },
   { ...products.flaconParfum1899, quantity: 1 },
   { ...products.boitePilulesMigraine975, quantity: 3 },
-  { ...products.boiteChocolatsImport1000, quantity: 2 },
+  { ...products.boiteChocolatsImport1125, quantity: 2 },
 ]);

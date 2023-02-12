@@ -1,8 +1,20 @@
 import { TAX_RATE } from '../data/constants.js';
 
+export type DisplayName = string;
 export type PriceInCents = number;
 export type Quantity = number;
-export type DisplayName = string;
+export type Invoice = string;
+export type InvoiceLine = string;
+export type InvoiceLines = string;
+export type InvoiceSummary = string;
+
+export interface BasketProduct extends IProduct {
+  quantity: Quantity;
+}
+
+export interface IBasket {
+  products: BasketProduct[];
+}
 
 export interface IProduct {
   readonly nameSingular: DisplayName;
@@ -13,26 +25,3 @@ export interface IProduct {
   readonly totalTax: PriceInCents;
   readonly afterTaxPrice: PriceInCents;
 }
-
-export interface BasketProduct extends IProduct {
-  quantity: Quantity;
-}
-
-export interface IBasket {
-  readonly products: BasketProduct[];
-  readonly totalTax: PriceInCents;
-  readonly afterTaxPrice: PriceInCents;
-}
-
-// export interface InvoiceLine {
-//   quantity: Quantity;
-//   name: DisplayName;
-//   price: PriceInCents;
-//   total: PriceInCents;
-// }
-
-// export interface Invoice {
-//   lines: InvoiceLine[];
-//   taxes: PriceInCents;
-//   total: PriceInCents;
-// }

@@ -34,7 +34,7 @@ export const essentialImport1125 = new Product(
   true
 );
 
-export const testBasket = new Basket( [
+export const testBasket = new Basket([
   { ...generalImport2799, quantity: 2 },
   { ...general1899, quantity: 1 },
   { ...essential975, quantity: 3 },
