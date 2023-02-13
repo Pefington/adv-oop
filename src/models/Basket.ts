@@ -1,76 +1,101 @@
-import {
-  IBasket,
-  BasketProduct,
-  PriceInCents,
-  Invoice,
-  InvoiceLine,
-  InvoiceLines,
-  InvoiceSummary,
-} from '../types/types.js';
+import * as products from '../data/products.js';
+import { PriceInCents, Quantity } from '../types/types.js';
+import { Product } from './Product.js';
 
-export class Basket implements IBasket {
-  private readonly basketTax: PriceInCents;
-  private readonly basketPrice: PriceInCents;
-  private readonly lines: String;
-  private readonly summary: InvoiceSummary;
-  private readonly invoice: Invoice;
 
-  constructor(public products: BasketProduct[]) {
-    this.basketTax = this.#basketTax();
-    this.basketPrice = this.#basketPrice();
-    this.summary = this.#summary();
-    this.lines = this.#lines();
-    this.invoice = this.#invoice();
+export type Invoice = string;
+export type InvoiceItems = string;
+export type InvoiceSummary = string;
+
+export interface InvoiceLine {
+  product: Product;
+  quantity: Quantity;
+}
+
+export interface Basket {
+  invoiceLines: InvoiceLine[];
+  printInvoice: () => void;
+}
+
+export class Basket implements Basket {
+  public printInvoice: () => void;
+
+  #totalTax: PriceInCents;
+  #totalPrice: PriceInCents;
+  #invoice: Invoice;
+  #items: InvoiceItems;
+  #summary: InvoiceSummary;
+
+  constructor(public invoiceLines: InvoiceLine[]) {
+    this.printInvoice = this.#printInvoice;
+    this.#totalTax = this.#computeBasketTax();
+    this.#totalPrice = this.#computeBasketPrice();
+
+    this.#invoice = this.generateInvoice();
+    this.#items = this.#generateItemLines();
+    this.#summary = this.#generateSummary();
   }
 
-  public printInvoice(): void {
-    console.log(this.invoice);
+  #printInvoice(): void {
+    console.log(this.#invoice);
+    console.log('lol');
   }
 
-  #invoice(): Invoice {
-    return `\n\n${this.lines}\n${this.summary}`;
+  generateInvoice(): Invoice {
+    return `\n\n${this.#items}\n${this.#summary}`;
   }
 
-  #basketPrice(): PriceInCents {
-    return this.products.reduce(
-      (total, product) => total + product.afterTaxPrice! * product.quantity,
-      0
-    );
+  #generateItemLines(): string {
+    return this.invoiceLines
+      .map((line) => `${this.#generateItemsLine(line)}`)
+      .join('\n');
   }
 
-  #basketTax(): PriceInCents {
-    return this.products.reduce(
-      (total, product) => total + product.totalTax! * product.quantity,
-      0
-    );
-  }
-
-  #lines(): InvoiceLines {
-    return this.products.map((product) => `${this.#line(product)}`).join('\n');
-  }
-
-  #line(product: BasketProduct): InvoiceLine {
-    const quantity = product.quantity;
-    const price = this.#formatToFrench(product.preTaxPrice);
+  #generateItemsLine(line: InvoiceLine): string {
+    const quantity = line.quantity;
+    const price = this.#formatToFrench(line.product.preTaxPrice);
     const name =
-      product.quantity === 1 ? product.nameSingular : product.namePlural;
-    const total = this.#formatToFrench(this.#productTotal(product));
+      line.quantity === 1 ? line.product.nameSingular : line.product.namePlural;
+    const total = this.#formatToFrench(this.#lineTotal(line));
 
     return `* ${quantity} ${name} à ${price} € : ${total} € TTC`;
   }
 
-  #summary(): InvoiceSummary {
-    const taxes = this.#formatToFrench(this.basketTax);
-    const total = this.#formatToFrench(this.basketPrice);
-
+  #generateSummary(): InvoiceSummary {
+    const taxes = this.#formatToFrench(this.#totalTax);
+    const total = this.#formatToFrench(this.#totalPrice);
     return `\nMontant des taxes : ${taxes} €\nTotal : ${total} €`;
   }
 
-  #productTotal(product: BasketProduct): PriceInCents {
-    return product.afterTaxPrice * product.quantity;
+  #lineTotal(invoiceLine: InvoiceLine): PriceInCents {
+    return invoiceLine.product.afterTaxPrice * invoiceLine.quantity;
   }
 
   #formatToFrench(price: PriceInCents): string {
     return (price / 100).toFixed(2).replace('.', ',');
   }
+
+  #computeBasketPrice(): PriceInCents {
+    return this.invoiceLines.reduce(
+      (total, line): PriceInCents =>
+        total + line.product.afterTaxPrice * line.quantity,
+      0
+    );
+  }
+
+  #computeBasketTax(): PriceInCents {
+    return this.invoiceLines.reduce(
+      (total, line): PriceInCents =>
+        total + line.product.totalTax * line.quantity,
+      0
+    );
+  }
 }
+
+export const testBasket = new Basket([
+  { product: products.livre1249, quantity: 2 },
+  { product: products.cdMusical1499, quantity: 1 },
+  { product: products.barreChocolat85, quantity: 3 },
+]);
+
+testBasket.generateInvoice();

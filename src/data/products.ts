@@ -1,5 +1,5 @@
-import { TAX_RATE } from './constants.js';
 import { Product } from '../models/Product.js';
+import { TAX_RATE } from './constants.js';
 
 export const livre1249 = new Product(
   'livre',

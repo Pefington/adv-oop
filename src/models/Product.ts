@@ -1,9 +1,20 @@
 import { TAX_RATE, TAX_ROUNDING_STEP } from '../data/constants.js';
-import { DisplayName, IProduct, PriceInCents } from '../types/types.js';
+import { PriceInCents } from '../types/types.js';
 
-export class Product implements IProduct {
-  public readonly totalTax: PriceInCents;
-  public readonly afterTaxPrice: PriceInCents;
+export type DisplayName = string;
+
+export interface Product {
+  readonly nameSingular: DisplayName;
+  readonly namePlural: DisplayName;
+  readonly preTaxPrice: PriceInCents;
+  readonly taxRate: TAX_RATE;
+  readonly isImported: boolean;
+}
+
+export class Product implements Product {
+  #totalTax: PriceInCents;
+  #afterTaxPrice: PriceInCents;
+
   constructor(
     public readonly nameSingular: DisplayName,
     public readonly namePlural: DisplayName,
@@ -11,15 +22,23 @@ export class Product implements IProduct {
     public readonly taxRate: TAX_RATE,
     public readonly isImported: boolean
   ) {
-    this.totalTax = this.#totalTax();
-    this.afterTaxPrice = this.#afterTaxPrice();
+    this.#totalTax = this.#computeTotalTax();
+    this.#afterTaxPrice = this.#computeAfterTaxPrice();
   }
 
-  #afterTaxPrice(): PriceInCents {
+  get totalTax(): PriceInCents {
+    return this.#totalTax;
+  }
+
+  get afterTaxPrice(): PriceInCents {
+    return this.#afterTaxPrice;
+  }
+
+  #computeAfterTaxPrice(): PriceInCents {
     return this.preTaxPrice + this.totalTax;
   }
 
-  #totalTax(): PriceInCents {
+  #computeTotalTax(): PriceInCents {
     const initialTax = (this.preTaxPrice * this.taxRate) / 100;
     const roundedTax = this.#applyRoundingStep(initialTax);
     if (!this.isImported) return roundedTax;
@@ -38,3 +57,13 @@ export class Product implements IProduct {
     return taxInCents + roundingCorrection;
   }
 }
+
+// const testProduct = new Product(
+//   'livre',
+//   'livres',
+//   100,
+//   TAX_RATE.General,
+//   false
+// );
+
+// console.log(testProduct, testProduct.totalTax, testProduct.afterTaxPrice);
