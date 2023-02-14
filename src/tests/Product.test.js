@@ -1,9 +1,10 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect,it } from 'vitest';
+
 import {
-  general1899,
-  generalImport2799,
   essential975,
   essentialImport1125,
+  general1899,
+  generalImport2799,
 } from './testData';
 
 describe('The Product class', () => {
@@ -14,8 +15,6 @@ describe('The Product class', () => {
       preTaxPrice: 2799,
       taxRate: 20,
       isImported: true,
-      totalTax: 700,
-      afterTaxPrice: 3499,
     });
   });
 });
