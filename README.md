@@ -1,5 +1,7 @@
 # Générateur de facture - Exercice de POO
 
+![Models](/public/img/models.png)
+
 ## ÉNONCÉ
 
 ### Taxes
