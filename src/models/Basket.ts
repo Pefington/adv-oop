@@ -1,76 +1,70 @@
-import {
-  IBasket,
-  BasketProduct,
-  PriceInCents,
-  Invoice,
-  InvoiceLine,
-  InvoiceLines,
-  InvoiceSummary,
-} from '../types/types.js';
+import { PriceInCents, Quantity } from '../types/types.js';
+import { Product } from './Product.js';
 
-export class Basket implements IBasket {
-  private readonly basketTax: PriceInCents;
-  private readonly basketPrice: PriceInCents;
-  private readonly lines: String;
-  private readonly summary: InvoiceSummary;
-  private readonly invoice: Invoice;
+export interface InvoiceLine {
+  product: Product;
+  quantity: Quantity;
+}
 
-  constructor(public products: BasketProduct[]) {
-    this.basketTax = this.#basketTax();
-    this.basketPrice = this.#basketPrice();
-    this.summary = this.#summary();
-    this.lines = this.#lines();
-    this.invoice = this.#invoice();
+export interface Basket {
+  invoiceLines: InvoiceLine[];
+  printInvoice: () => void;
+}
+
+export class Basket implements Basket {
+  constructor(public invoiceLines: InvoiceLine[]) {
+    this.printInvoice = this.#logInvoice;
   }
 
-  public printInvoice(): void {
-    console.log(this.invoice);
+  #logInvoice(): void {
+    console.log(this.#formattedInvoice());
   }
 
-  #invoice(): Invoice {
-    return `\n\n${this.lines}\n${this.summary}`;
+  #formattedInvoice(): string {
+    return `\n\n${this.#formattedLines()}\n${this.#formattedSummary()}`;
   }
 
-  #basketPrice(): PriceInCents {
-    return this.products.reduce(
-      (total, product) => total + product.afterTaxPrice! * product.quantity,
-      0
-    );
+  #formattedLines(): string {
+    return this.invoiceLines.map((line) => `${this.#format(line)}`).join('\n');
   }
 
-  #basketTax(): PriceInCents {
-    return this.products.reduce(
-      (total, product) => total + product.totalTax! * product.quantity,
-      0
-    );
-  }
-
-  #lines(): InvoiceLines {
-    return this.products.map((product) => `${this.#line(product)}`).join('\n');
-  }
-
-  #line(product: BasketProduct): InvoiceLine {
-    const quantity = product.quantity;
-    const price = this.#formatToFrench(product.preTaxPrice);
+  #format(line: InvoiceLine): string {
+    const price = this.#formatToFrench(line.product.preTaxPrice);
     const name =
-      product.quantity === 1 ? product.nameSingular : product.namePlural;
-    const total = this.#formatToFrench(this.#productTotal(product));
+      line.quantity === 1 ? line.product.nameSingular : line.product.namePlural;
+    const total = this.#formatToFrench(this.#lineTotal(line));
 
-    return `* ${quantity} ${name} à ${price} € : ${total} € TTC`;
+    return `* ${line.quantity} ${name} à ${price} € : ${total} € TTC`;
   }
 
-  #summary(): InvoiceSummary {
-    const taxes = this.#formatToFrench(this.basketTax);
-    const total = this.#formatToFrench(this.basketPrice);
+  #formattedSummary(): string {
+    const taxes = this.#formatToFrench(this.#basketTax());
+    const total = this.#formatToFrench(this.#basketTotal());
 
     return `\nMontant des taxes : ${taxes} €\nTotal : ${total} €`;
   }
 
-  #productTotal(product: BasketProduct): PriceInCents {
-    return product.afterTaxPrice * product.quantity;
+  #basketTotal(): PriceInCents {
+    return this.invoiceLines.reduce(
+      (total, line): PriceInCents =>
+        total + line.product.afterTaxPrice * line.quantity,
+      0
+    );
+  }
+
+  #lineTotal(line: InvoiceLine): PriceInCents {
+    return line.product.afterTaxPrice * line.quantity;
   }
 
   #formatToFrench(price: PriceInCents): string {
     return (price / 100).toFixed(2).replace('.', ',');
+  }
+
+  #basketTax(): PriceInCents {
+    return this.invoiceLines.reduce(
+      (total, line): PriceInCents =>
+        total + line.product.totalTax * line.quantity,
+      0
+    );
   }
 }
