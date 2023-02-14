@@ -1,6 +1,28 @@
 import { Product } from '../models/Product.js';
 import { TAX_RATE } from './constants.js';
 
+/*
+
+Input 1
+
+  2 livres à 12.49€
+  1 CD musical à 14.99€
+  3 barres de chocolat à 0.85€
+
+Input 2
+
+  2 boîtes de chocolats importées à 10€
+  3 flacons de parfum importés à 47.50€
+
+Input 3
+
+  2 flacons de parfum importés à 27.99€
+  1 flacon de parfum à 18.99€
+  3 boîtes de pilules contre la migraine à 9.75€
+  2 boîtes de chocolats importées à 11.25€
+
+*/
+
 export const livre1249 = new Product(
   'livre',
   'livres',
