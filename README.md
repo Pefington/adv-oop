@@ -1,6 +1,7 @@
 # Générateur de facture - Exercice de POO
 
 ![Models](/public/img/models.png)
+![Relationships](/public/img/Uml_classes_en.svg)
 
 ## ÉNONCÉ
 

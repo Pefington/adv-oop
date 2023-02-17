@@ -1,5 +1,11 @@
-import { basket1, basket2, basket3 } from './data/baskets.js';
+import { Commande } from './models/Commande.js';
 
-basket1.printInvoice()
-basket2.printInvoice()
-basket3.printInvoice()
+const commande1 = new Commande(
+  
+);
+const commande2 = new Commande();
+const commande3 = new Commande();
+
+commande1.ImprimerFacture();
+commande2.ImprimerFacture();
+commande3.ImprimerFacture();
