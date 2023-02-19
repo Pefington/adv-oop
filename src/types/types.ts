@@ -1,8 +1,21 @@
-import { Produit } from '../models/Produit.js';
+import { Article } from '../main.js';
 
 export type Entier = number;
-export type LigneCommande = Map<Produit, Quantite>;
-export type LigneFacture = Map<Produit, Quantite>;
+export type Lignes = Map<Article, Quantite>;
 export type Pourcentage = number;
 export type PrixEnCents = number;
+export type Origine = 'IMPORT' | 'LOCAL';
 export type Quantite = Entier;
+
+export interface ICommande {
+  ajouterArticle: (article: Article, quantite: Quantite) => void;
+  imprimerFacture: () => void;
+}
+
+export interface IFacture {
+  imprimer: () => void;
+}
+
+export interface IPrix {
+  prixTTC: () => PrixEnCents;
+}
