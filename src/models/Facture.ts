@@ -32,6 +32,6 @@ export class FactureImplementation implements Facture {
     console.log(`  Montant des taxes : ${totalTaxesFR} €`);
     console.log(`  Total : ${totalCommandeFR} €`);
     console.log('');
-    console.log('------------------------');
+    console.log('========================================');
   }
 }
