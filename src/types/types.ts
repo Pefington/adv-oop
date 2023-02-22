@@ -1,11 +1,9 @@
-import { CategorieArticle } from '../data/Constantes.js';
 import { ArticleImplementation } from '../models/Article.js';
 
 export type Entier = number;
 export type Lignes = Map<ArticleImplementation, Quantite>;
 export type Pourcentage = number;
 export type PrixEnCents = number;
-export type Origine = 'import' | undefined;
 export type Quantite = Entier;
 
 export interface Commande {
@@ -18,9 +16,10 @@ export interface Facture {
 }
 
 export interface Article {
+  get nom(): string;
   get prixHT(): PrixEnCents;
-  get categorie(): CategorieArticle;
-  get origine(): Origine;
+  get montantTaxe(): PrixEnCents;
+  get prixTTC(): PrixEnCents;
 }
 
 export interface Prix {
