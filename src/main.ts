@@ -1,120 +1,99 @@
+import { CategorieArticle } from './data/Constantes.js';
+import { ArticleImplementation } from './models/Article.js';
+import { CommandeImplementation } from './models/Commande.js';
+
 /*
+Input 1
 
-Le programme contient les types suivants :
-  export type Entier = number;
-  export type LigneCommande = Map<Article, Quantite>;
-  export type Pourcentage = number;
-  export type PrixEnCents = number;
-  export type Quantite = Entier;
-
-La classe Commande a :
-  - une methode publique "ajouterArticle(article: Article, quantite: Quantite)" qui ajoute un article à la commande,
-  - une methode publique "imprimerFacture()" qui imprime la facture de la commande.
-
-La classe Article a :
-  - une propriete privee "nom: string" qui contient le nom de l'article,
-  - une propriete privee "importe: boolean" qui indique si l'article est importé ou non
-
-La classe Facture a :
-  - une methode publique "imprimer()" qui fait un console.log de la facture.
-
-La classe Prix a :
-  - une propriete privee "horsTaxe: PrixEnCents" qui contient le prix hors taxes en cents de l'article,
-  - une methode privee "arrondirTaxe(taxe: PrixEnCents): PrixEnCents" qui arrondit le prix de la taxe aux 5 centimes supérieurs,
-  - une methode publique "montantTaxe(taux: Pourcentage): PrixEnCents" qui calcule le prix de la taxe en cents,
-  - une methode publique "ttc(): PrixEnCents" qui calcule le prix TTC en cents
-
-La classe Taxe a :
-  - une propriete privee "taux: Pourcentage" qui contient le taux de la taxe,
-
-L'enumeration TypeArticle contient :
-  - les valeurs "PREMIERE_NECESSITE", "LIVRE", "AUTRE"
-
+  2 livres à 12.49€
+  1 CD musical à 14.99€
+  3 barres de chocolat à 0.85€
 */
 
-import { TypeArticle } from './data/TypeArticle.js';
-import {
-  ICommande,
-  IFacture,
-  IPrix,
-  Lignes,
-  Origine,
-  Pourcentage,
-  PrixEnCents,
-  Quantite,
-} from './types/types.js';
+export const livres1249 = new ArticleImplementation(
+  'livres',
+  1249,
+  CategorieArticle.LIVRE
+);
 
-export class Commande implements ICommande {
-  private readonly lignes: Lignes = new Map();
+export const cdMusical1499 = new ArticleImplementation(
+  'CD musical',
+  1499,
+  CategorieArticle.AUTRE
+);
 
-  public ajouterArticle(article: Article, quantite: Quantite): void {
-    this.lignes.set(article, quantite);
-  }
+export const barresChocolat85 = new ArticleImplementation(
+  'barres de chocolat',
+  85,
+  CategorieArticle.PREMIERE_NECESSITE
+);
 
-  public imprimerFacture(): void {
-    const facture = new Facture(this.lignes);
-    facture.imprimer();
-  }
-}
+const commande1 = new CommandeImplementation();
+commande1.ajouterArticle(livres1249, 2);
+commande1.ajouterArticle(cdMusical1499, 1);
+commande1.ajouterArticle(barresChocolat85, 3);
+commande1.imprimerFacture();
 
-export class Facture implements IFacture {
-  constructor(private readonly lignes: Lignes) {}
-  public imprimer(): void {
-    this.lignes.forEach( ( quantite, article ) => {
-      const nom = article.nom;
-      const prixHT = article.prixHT
-      console.log(`* ${quantite} x ${nom} à ${price} € : ${total} € TTC`);
-      console.log(`Article: ${article.nom} - Quantité: ${quantite}`);
-    });
-  }
-}
+/*
+Input 2
 
-export class Article {
-  #nom: string;
-  #origine: Origine;
-  #categorie: TypeArticle;
-  #prix: Prix;
+  2 boîtes de chocolats importées à 10€
+  3 flacons de parfum importés à 47.50€
+*/
 
-  constructor(nom: string, prixHT: PrixEnCents, categorie: TypeArticle , origine: Origine) {
-    this.#nom = nom;
-    this.#prix = new Prix( prixHT: PrixEnCents, categorie: TypeArticle );
-    this.#categorie = categorie;
-    this.#origine = origine;
-  }
+export const boitesChocolatsImport1000 = new ArticleImplementation(
+  'boîtes de chocolats importées',
+  1000,
+  CategorieArticle.PREMIERE_NECESSITE
+);
 
-  public get nom(): string {
-    return this.#nom;
-  }
+export const flaconsParfumImport4750 = new ArticleImplementation(
+  'flacons de parfum importés',
+  4750,
+  CategorieArticle.AUTRE
+);
 
-  public get estImporte(): boolean {
-    return this.#origine === 'IMPORT';
-  }
+const commande2 = new CommandeImplementation();
+commande2.ajouterArticle(boitesChocolatsImport1000, 2);
+commande2.ajouterArticle(flaconsParfumImport4750, 3);
+commande2.imprimerFacture();
 
-  public get prixHT(): PrixEnCents {
-    return this.#prix.horsTaxe;
-  }
-}
+/*
+Input 3
 
-export class Prix implements IPrix {
-  #horsTaxe: PrixEnCents;
+  2 flacons de parfum importés à 27.99€
+  1 flacon de parfum à 18.99€
+  3 boîtes de pilules contre la migraine à 9.75€
+  2 boîtes de chocolats importées à 11.25€
+*/
 
-  constructor(horsTaxe: PrixEnCents, categorie: TypeArticle) {
-    this.#horsTaxe = horsTaxe;
-  }
+export const flaconsParfumImport2799 = new ArticleImplementation(
+  'flacons de parfum importés',
+  2799,
+  CategorieArticle.AUTRE
+);
 
-  public get horsTaxe(): PrixEnCents {
-    return this.#horsTaxe;
-  }
+export const flaconParfum1899 = new ArticleImplementation(
+  'flacon de parfum',
+  1899,
+  CategorieArticle.AUTRE
+);
 
-  #arrondirTaxe(taxe: PrixEnCents): PrixEnCents {
-    return Math.ceil(taxe / 5) * 5;
-  }
+export const boitesPilulesMigraine975 = new ArticleImplementation(
+  'boîtes de pilules contre la migraine',
+  975,
+  CategorieArticle.PREMIERE_NECESSITE
+);
 
-  #montantTaxe(taux: Pourcentage): PrixEnCents {
-    return this.#arrondirTaxe(this.horsTaxe * taux);
-  }
+export const boitesChocolatsImport1125 = new ArticleImplementation(
+  'boîtes de chocolats importées',
+  1125,
+  CategorieArticle.PREMIERE_NECESSITE
+);
 
-  public prixTTC(): PrixEnCents {
-    return this.horsTaxe + this.#montantTaxe();
-  }
-}
+const commande3 = new CommandeImplementation();
+commande3.ajouterArticle(flaconsParfumImport2799, 2);
+commande3.ajouterArticle(flaconParfum1899, 1);
+commande3.ajouterArticle(boitesPilulesMigraine975, 3);
+commande3.ajouterArticle(boitesChocolatsImport1125, 2);
+commande3.imprimerFacture();
