@@ -1,6 +1,50 @@
 # Générateur de facture - Exercice de POO
 
-![Models](/public/img/classes.svg)
+```mermaid
+---
+title: Invoicing
+---
+classDiagram
+direction TB
+  Commande ..> Facture : Commande utilise Facture (dependency)
+  Commande *-- "1..*" Article : Au moins 1 article appartient <br/> à une Commande (composition)
+  Facture ..> Article : Facture utilise article (dependency)
+  Article *-- Prix : Article a un Prix (composition)
+  Prix ..> CategorieArticle : Prix utilise CategorieArticle (dependency)
+  Article ..> CategorieArticle : Article utilise CategorieArticle (dependency)
+
+  class Commande {
+    -lignes: Lignes
+    +ajouterArticle( article: Article, quantite: Quantite ): void
+    +imprimerFacture(): void
+  }
+
+  class Facture {
+    +imprimer(): void
+  }
+
+  class Article {
+    -nom: string
+    -prixHT: PrixEnCents
+    -categorie: TypeArticle
+    -origine?: Origine
+  }
+
+  class Prix {
+    -horsTaxe: PrixEnCents
+    -arrondirTaxe(PrixEnCents): PrixEnCents
+    +montantTaxe(): PrixEnCents
+    +ttc(): PrixEnCents
+  }
+
+  class CategorieArticle {
+    <<enumeration>>
+    PREMIERE_NECESSITE: Pourcentage
+    LIVRE: Pourcentage
+    AUTRE: Pourcentage
+    IMPORT: Pourcentage
+  }
+```
 
 ## ÉNONCÉ
 
