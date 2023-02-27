@@ -1,19 +1,16 @@
-import { Commande, Lignes, Quantite } from '../types/types.js';
-import { ArticleImplementation } from './Article.js';
-import { FactureImplementation } from './Facture.js';
+import { ArticleParQuantite, Quantite } from '../types/types.js';
+import { Article } from './Article.js';
+import { Facture } from './Facture.js';
 
-export class CommandeImplementation implements Commande {
-  private readonly _lignes: Lignes = new Map();
+export class Commande {
+  private readonly _lignes: ArticleParQuantite = new Map();
 
-  public ajouterArticle(
-    article: ArticleImplementation,
-    quantite: Quantite
-  ): void {
+  public ajouterArticle(article: Article, quantite: Quantite): void {
     this._lignes.set(article, quantite);
   }
 
   public imprimerFacture(): void {
-    const facture = new FactureImplementation(this._lignes);
+    const facture = new Facture(this._lignes);
     facture.imprimer();
   }
 }

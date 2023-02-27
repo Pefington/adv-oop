@@ -5,17 +5,15 @@
 title: Mermaid class diagram
 ---
 classDiagram
-  Commande *-- Facture : Une Commande génère une Facture<br/>(composition)
-  Commande o-- Article : Une Commande est composée<br/>d'articles préexistants<br/>(aggregation)
-  Facture ..> Article : Une Facture utilise les articles<br/>de sa Commande créatrice<br/>(dependency)
-  Article *-- Prix : Un Article génère un Prix<br/>(composition)
-  Prix ..> CategorieArticle : Un Prix utilise la CategorieArticle<br/>de son article créateur<br/>(dependency)
-  Article ..> CategorieArticle : Un Article utilise une CategorieArticle<br/>(dependency)
+  Commande --> "1" Facture
+  Commande ..> "*" Article : has many
+  Article *-- "1" Prix : has a
+  Prix ..> CategorieTaxe : uses
 
   class Commande {
-    -lignes: Lignes
-    +ajouterArticle( article: Article, quantite: Quantite ): void
-    +imprimerFacture(): void
+    -lignes: Map < Article, Quantite >
+    +ajouterArticle(Article, Quantite): void
+    +imprimerFacture(new Facture): void
   }
 
   class Facture {
@@ -34,7 +32,7 @@ classDiagram
     -ttc: PrixEnCents
   }
 
-  class CategorieArticle {
+  class CategorieTaxe {
     <<enumeration>>
     PREMIERE_NECESSITE: Pourcentage
     LIVRE: Pourcentage

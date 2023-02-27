@@ -1,7 +1,7 @@
-import { Facture, Lignes, PrixEnCents } from '../types/types.js';
+import { ArticleParQuantite, PrixEnCents } from '../types/types.js';
 
-export class FactureImplementation implements Facture {
-  constructor(private readonly _lignes: Lignes) {}
+export class Facture {
+  constructor(private readonly _lignes: ArticleParQuantite) {}
 
   private _formatToFrench(price: PrixEnCents): string {
     return (price / 100).toFixed(2).replace('.', ',');

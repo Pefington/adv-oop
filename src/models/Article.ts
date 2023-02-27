@@ -1,22 +1,18 @@
-import { CategorieArticle } from '../data/Constantes.js';
-import { Article, Prix, PrixEnCents } from '../types/types.js';
-import { PrixImplementation } from './Prix.js';
+import { CategorieTaxe } from '../data/Constantes.js';
+import { PrixEnCents } from '../types/types.js';
+import { Prix } from './Prix.js';
 
-export class ArticleImplementation implements Article {
+export class Article {
   private readonly _estImporte: boolean;
   private readonly _prix: Prix;
 
   constructor(
     private readonly _nom: string,
     private readonly _prixHT: PrixEnCents,
-    private readonly _categorie: CategorieArticle
+    private readonly _categorie: CategorieTaxe
   ) {
     this._estImporte = this._nom.includes('import');
-    this._prix = new PrixImplementation(
-      this._prixHT,
-      this._categorie,
-      this._estImporte
-    );
+    this._prix = new Prix(this._prixHT, this._categorie, this._estImporte);
   }
 
   public get nom(): string {

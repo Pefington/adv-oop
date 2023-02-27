@@ -1,14 +1,14 @@
 import {
   ARRONDI_EN_CENTS,
-  CategorieArticle,
+  CategorieTaxe,
   TAUX_IMPORT,
 } from '../data/Constantes.js';
-import { Prix, PrixEnCents } from '../types/types.js';
+import { PrixEnCents } from '../types/types.js';
 
-export class PrixImplementation implements Prix {
+export class Prix {
   constructor(
     private readonly _prixHT: PrixEnCents,
-    private readonly _taux: CategorieArticle,
+    private readonly _taux: CategorieTaxe,
     private readonly estImporte: boolean
   ) {}
 
