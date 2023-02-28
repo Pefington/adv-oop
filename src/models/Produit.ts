@@ -2,7 +2,7 @@ import { CategorieTaxe } from '../data/Constantes.js';
 import { PrixEnCents } from '../types/types.js';
 import { Prix } from './Prix.js';
 
-export class Article {
+export class Produit {
   private readonly _estImporte: boolean;
   private readonly _prix: Prix;
 

@@ -6,13 +6,13 @@ title: Mermaid class diagram
 ---
 classDiagram
   Commande --> "1" Facture
-  Commande ..> "*" Article : has many
-  Article *-- "1" Prix : has a
+  Commande ..> "*" Produit : has many
+  Produit --> "1" Prix : has a
   Prix ..> CategorieTaxe : uses
 
   class Commande {
-    -lignes: Map < Article, Quantite >
-    +ajouterArticle(Article, Quantite): void
+    -lignes: Map < Produit, Quantite >
+    +ajouterProduit(Produit, Quantite): void
     +imprimerFacture(new Facture): void
   }
 
@@ -20,7 +20,7 @@ classDiagram
     +imprimer(): void
   }
 
-  class Article {
+  class Produit {
     -nom: string
     -prixHT: PrixEnCents
     -montantTaxe: PrixEnCents

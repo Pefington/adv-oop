@@ -1,7 +1,7 @@
-import { ArticleParQuantite, PrixEnCents } from '../types/types.js';
+import { ProduitParQuantite, PrixEnCents } from '../types/types.js';
 
 export class Facture {
-  constructor(private readonly _lignes: ArticleParQuantite) {}
+  constructor(private readonly _lignes: ProduitParQuantite) {}
 
   private _formatToFrench(price: PrixEnCents): string {
     return (price / 100).toFixed(2).replace('.', ',');
@@ -13,15 +13,15 @@ export class Facture {
 
     console.log('');
 
-    this._lignes.forEach((quantite, article) => {
-      const prixHT = this._formatToFrench(article.prixHT);
-      const ligneTTC = this._formatToFrench(article.prixTTC * quantite);
+    this._lignes.forEach((quantite, produit) => {
+      const prixHT = this._formatToFrench(produit.prixHT);
+      const ligneTTC = this._formatToFrench(produit.prixTTC * quantite);
 
-      totalTaxes += article.montantTaxe * quantite;
-      totalCommande += article.prixTTC * quantite;
+      totalTaxes += produit.montantTaxe * quantite;
+      totalCommande += produit.prixTTC * quantite;
 
       console.log(
-        `* ${quantite} ${article.nom} à ${prixHT} € : ${ligneTTC} € TTC`
+        `* ${quantite} ${produit.nom} à ${prixHT} € : ${ligneTTC} € TTC`
       );
     });
 

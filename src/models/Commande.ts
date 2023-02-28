@@ -1,12 +1,12 @@
-import { ArticleParQuantite, Quantite } from '../types/types.js';
-import { Article } from './Article.js';
+import { ProduitParQuantite, Quantite } from '../types/types.js';
+import { Produit } from './Produit.js';
 import { Facture } from './Facture.js';
 
 export class Commande {
-  private readonly _lignes: ArticleParQuantite = new Map();
+  private readonly _lignes: ProduitParQuantite = new Map();
 
-  public ajouterArticle(article: Article, quantite: Quantite): void {
-    this._lignes.set(article, quantite);
+  public ajouterProduit(produit: Produit, quantite: Quantite): void {
+    this._lignes.set(produit, quantite);
   }
 
   public imprimerFacture(): void {
